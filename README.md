@@ -13,6 +13,21 @@ The most convenient way to run the ElastAlert server is by using our Docker cont
 
 To run the Docker image you will want to mount the volumes for configuration and rule files to keep them after container updates. In order to do that conveniently, please do: `git clone https://github.com/bitsensor/elastalert.git; cd elastalert`
 
+## Run For Me... Using Python3.7
+```bash
+sudo make build v=v0.2.1
+
+docker run -d -p 3030:3030 -p 3333:3333 \
+    -v `pwd`/config/elastalert.yaml:/opt/elastalert/config.yaml \
+    -v `pwd`/config/elastalert-test.yaml:/opt/elastalert/config-test.yaml \
+    -v `pwd`/config/config.json:/opt/elastalert-server/config/config.json \
+    -v `pwd`/rules:/opt/elastalert/rules \
+    -v `pwd`/rule_templates:/opt/elastalert/rule_templates \
+    --net="host" \
+    --name elastalert elastalert:latest
+```
+
+### Below will work for old python versions
 ```bash
 docker run -d -p 3030:3030 -p 3333:3333 \
     -v `pwd`/config/elastalert.yaml:/opt/elastalert/config.yaml \
